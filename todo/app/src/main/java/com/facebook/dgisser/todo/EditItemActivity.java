@@ -9,7 +9,7 @@ import android.widget.EditText;
 public class EditItemActivity extends AppCompatActivity {
     String word;
     EditText editText;
-    private final int RESULT_OK = 20;
+    int getResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +17,7 @@ public class EditItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_item);
         EditText editText = (EditText) findViewById(R.id.editText);
         word = getIntent().getStringExtra("word");
+        getResult = getIntent().getIntExtra("CODE", 0);
         editText.setText(word);
     }
 
@@ -25,7 +26,7 @@ public class EditItemActivity extends AppCompatActivity {
         String itemText = editText.getText().toString();
         Intent data = new Intent();
         data.putExtra("response",itemText);
-        setResult(RESULT_OK, data);
+        setResult(getResult, data);
         finish();
     }
 

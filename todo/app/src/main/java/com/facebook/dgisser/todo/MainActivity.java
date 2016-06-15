@@ -3,6 +3,7 @@ package com.facebook.dgisser.todo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -62,11 +63,26 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(MainActivity.this, EditItemActivity.class);
                 i.putExtra("word",items.get(position).toString());
+                i.putExtra("CODE",REQUEST_CODE);
                 pos = position;
                 startActivityForResult(i, REQUEST_CODE);
             }
         });
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // REQUEST_CODE is defined above
+        Log.d("Testing",String.format("%d %d",resultCode, requestCode));
+        if (resultCode == REQUEST_CODE && requestCode == RESULT_OK) {
+            // Extract name value from result extras
+            Log.d("Testing",String.format("%d",requestCode));
+            String response = data.getExtras().getString("response");
+            items.set(pos, response);
+            itemsAdapter.notifyDataSetChanged();
+            writeItems();
+        }
     }
 
     private void readItems() {
@@ -86,19 +102,6 @@ public class MainActivity extends AppCompatActivity {
             FileUtils.writeLines(todoFile, items);
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // REQUEST_CODE is defined above
-        if (resultCode == RESULT_OK && requestCode == true) {
-            // Extract name value from result extras
-            String response = data.getExtras().getString("response");
-            itemsAdapter.insert(response,0);
-            itemsAdapter.notifyDataSetChanged();
-
-            writeItems();
         }
     }
 
