@@ -18,11 +18,13 @@ public class EditItemActivity extends AppCompatActivity {
         EditText editText = (EditText) findViewById(R.id.editText);
         word = getIntent().getStringExtra("word");
         getResult = getIntent().getIntExtra("CODE", 0);
+        assert editText != null;
         editText.setText(word);
     }
 
     public void onEdit(View v) {
         EditText editText = (EditText) findViewById(R.id.editText);
+        assert editText != null;
         String itemText = editText.getText().toString();
         Intent data = new Intent();
         data.putExtra("response",itemText);

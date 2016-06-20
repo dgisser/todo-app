@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // REQUEST_CODE is defined above
         Log.d("Testing",String.format("%d %d",resultCode, requestCode));
-        if (resultCode == REQUEST_CODE && requestCode == RESULT_OK) {
+        if (resultCode == REQUEST_CODE) {
             // Extract name value from result extras
             Log.d("Testing",String.format("%d",requestCode));
             String response = data.getExtras().getString("response");
